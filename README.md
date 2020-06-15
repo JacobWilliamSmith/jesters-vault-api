@@ -1,2 +1,2 @@
 # jesters-vault-api
-Jester's Vault app api source code
+Jester's Vault API source code
