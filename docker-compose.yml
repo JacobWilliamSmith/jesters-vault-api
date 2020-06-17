@@ -1,11 +1,22 @@
 version: "3"
 
 services:
-    app:
-        build:
-            context: .
-        ports:
-            - "8000:8000"
-        volumes:
-            - ./app:/app
-        command: sh -c "python manage.py runserver 0.0.0.0:8000"
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/opentrack_dir
+    ports:
+      - "8000:8000"
+    env_file:
+      - local-var.env
+    links:
+      - db:db
